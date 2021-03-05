@@ -1,0 +1,338 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<style>
+  textarea {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .myButton {
+    box-shadow: 0px 10px 14px -7px #276873;
+    background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+    background-color: #599bb3;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 18px;
+    font-weight: bold;
+    /* padding:13px 32px; */
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #3d768a;
+  }
+
+  .myButton:hover {
+    background: linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+    background-color: #408c99;
+  }
+
+  .myButton:active {
+    position: relative;
+    top: 1px;
+  }
+</style>
+
+<form action="{{ url_for('result') }}" method="post" id="form1">
+
+  <textarea cols="80" rows="20" name="POSCAR">
+    please input poscar
+  1.0
+          5.4299998283         0.0000000000         0.0000000000
+          0.0000000000         5.4299998283         0.0000000000
+          0.0000000000         0.0000000000         5.4299998283
+     Si
+      8
+  Direct
+       0.000000000         0.000000000         0.000000000
+       0.000000000         0.500000000         0.500000000
+       0.500000000         0.500000000         0.000000000
+       0.500000000         0.000000000         0.500000000
+       0.750000000         0.250000000         0.750000000
+       0.250000000         0.250000000         0.250000000
+       0.250000000         0.750000000         0.750000000
+       0.750000000         0.750000000         0.250000000
+</textarea><br> <br>
+
+  <div class="container">
+
+
+    <p>
+      If you have any problems during your use, please contact the developer at
+      <a href="mailto:changchun_he@foxmail.com" target="_top">changchun_he@foxmail.com</a> <br>
+      If this tool is useful to your work, we will be appreciated if you cite the below article. <br>
+
+      <ol>
+        <li>Atom Classification Model for Total Energy Evaluation of Two-Dimensional Multicomponent Materials.
+          <a href="https://pubs.acs.org/doi/10.1021/acs.jpca.0c02431">J. Phys. Chem. A 2020, 124, 22, 4506–4511 </a> </li>
+      </ol>
+    </p>
+
+    Space Group (for crystal) <br>
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">system precision: </label>
+        <input type="text" value="1e-3" name="symprec_space_group" class="form-control form-control-sm" title="If your structure heavily deviates the perfect crytal, please decrease the precision"></input> &nbsp;&nbsp;
+        <input type="submit" value="submit" name="space_group" class="myButton"></input>
+      </div>
+    </div>
+    <br> <br>
+
+
+
+
+    Permutation Table (for crystal and molecule) <br>
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">system precision: </label>
+        <input type="text" value="1e-3" name="symprec_perm_table" class="form-control form-control-sm" title="If your structure heavily deviates the perfect crytal, please decrease the precision"></input> &nbsp;&nbsp;
+      </div>
+      structure type:
+      <select class="form-control form-control-sm" name="stru_type">
+        <option value="crystal">crystal</option>
+        <option value="molecule">molecule</option>
+      </select>&nbsp;&nbsp;
+      <input type="submit" value="submit" name="perm_table" class="myButton"></input>
+    </div>
+    <br> <br>
+
+    Identity atoms (for crystal and molecule) <br>
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">system precision: </label>
+        <input type="text" value="1e-3" name="symprec_identity_atoms" class="form-control form-control-sm" title="If your structure heavily deviates the perfect crytal, please decrease the precision"></input> &nbsp;&nbsp;
+      </div>
+      structure type:
+      <select class="form-control form-control-sm" name="stru_type_identity">
+        <option value="crystal">crystal</option>
+        <option value="molecule">molecule</option>
+      </select>&nbsp;&nbsp;
+      <input type="submit" value="submit" name="Identity_atoms" class="myButton"></input>
+    </div>
+    <br> <br>
+
+
+    K-Path for Band Structures Calculation
+    <input type="submit" value="submit" name="k_path" class="myButton"></input> <br> <br>
+
+
+    Primitive Cell <br>
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">system precision: </label>
+        <input type="text" value="1e-3" name="symprec_primitive_cell" class="form-control form-control-sm" title="If your structure heavily deviates the perfect crytal, please decrease the precision"></input> &nbsp;&nbsp;
+        <input type="submit" value="submit" name="primitive_cell" class="myButton"></input>
+      </div>
+    </div>
+    <br> <br>
+
+
+    1. Specific Cell Point Defect Configurations Generator <br>
+    (If you want to directly remove element, element inserted should be Vac) <br>
+    (If you want to generate all concentrations configurations, # of element number should be blank) <br>
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">element inserted: </label>
+        <input type="text" placeholder="Ge,C" name="ele_ins_spec_cell" class="form-control form-control-sm" title="This blank is corresponding to '# of inserted element'"></input>&nbsp;&nbsp;
+        <label class="control-label">element removed: </label>
+        <input type="text" placeholder="Si" name="ele_rm_spec_cell" class="form-control form-control-sm"></input>
+      </div>
+    </div>
+
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label"># of inserted element: </label>
+        <input type="text" placeholder="3,2" name="num_spec_cell" class="form-control form-control-sm" title="This blank is corresponding to 'element inserted'"></input>&nbsp;&nbsp;
+        <label class="control-label">system precision: </label>
+        <input type="text" value="1e-3" name="symprec_spec_cell" class="form-control form-control-sm" title="If your structure heavily deviates the perfect crytal, please decrease the precision"></input>&nbsp;&nbsp;
+        <input type="submit" value="submit" name="spec_cell" class="myButton"></input>
+      </div>
+    </div>
+    hint: below format is supported
+    <ol>
+      <li>element inserted: B,N element removed: C # of inserted element:3,2</li>
+      <li>element inserted: N element removed: B,C # of inserted element:3</li>
+      <li>element inserted: B element removed: all # of inserted element:2</li>
+      <li>element inserted: B element removed: all # of inserted element:</li> (if this leaves blank, all concentrations will be genrated)
+    </ol>
+    <br>
+    <br>
+
+    2. Molecule Point Defect Configurations Generator <br>
+    (If you want to directly remove element, # of inserted element should be Vac) <br>
+    (If you want to generate all concentrations configurations, # of element number should be blank) <br>
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">element inserted: </label>
+        <input type="text" placeholder="Ge,C" name="ele_ins_spec_mole" class="form-control form-control-sm" title="This blank is corresponding to '# of inserted element'"></input>&nbsp;&nbsp;
+        <label class="control-label">element removed: </label>
+        <input type="text" placeholder="Si" name="ele_rm_spec_mole" class="form-control form-control-sm"></input>
+      </div>
+    </div>
+
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label"># of inserted element: </label>
+        <input type="text" placeholder="3,2" name="num_spec_mole" class="form-control form-control-sm" title="This blank is corresponding to 'element inserted'"></input>&nbsp;&nbsp;
+        <label class="control-label">system precision: </label>
+        <input type="text" value="1e-3" name="symprec_spec_mole" class="form-control form-control-sm" title="If your structure heavily deviates the perfect crytal, please decrease the precision"></input>&nbsp;&nbsp;
+        <input type="submit" value="submit" name="spec_mole" class="myButton"></input>
+      </div>
+    </div>
+    hint: below format is supported
+    <ol>
+      <li>element inserted: B,N element removed: C # of inserted element:3,2</li>
+      <li>element inserted: N element removed: B,C # of inserted element:3</li>
+      <li>element inserted: B element removed: all # of inserted element:2</li>
+    </ol>
+    <br>
+    <br>
+
+
+<div id="specific_volme_supercell"></div>
+    3. Specific Volume Supercell Generator <br>
+    (A primitive cell should be provided) <br>
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">Specific volume:</label>
+        <input type="text" placeholder="2" name="num_vol_extend_cell" class="form-control form-control-sm" title="you will get 3,4,5 times volume cells if you input 3,5 "></input>&nbsp;&nbsp;
+        dimension:
+        <select class="form-control form-control-sm" name="dim_extend_cell">
+          <option value="3">3</option>
+          <option value="2">2</option>
+        </select>&nbsp;&nbsp;
+        <input type="submit" value="submit" name="extend_cell" class="myButton"></input>
+      </div>
+    </div>
+    <br><br>
+
+    4. Specific Volume Point Defect Configurations Generator <br>
+    (A primitive cell should be provided) <br>
+    (If you want to directly remove element, # of inserted element should be Vac) <br>
+    (If you want to generate all concentrations configurations, # of element number should be blank) <br>
+
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">element inserted: </label>
+        <input type="text" placeholder="Ge,C" name="ele_ins_spec_vol" class="form-control form-control-sm" title="This blank is corresponding to '# of inserted element'"></input>&nbsp;&nbsp;
+        <label class="control-label">element removed: </label>
+        <input type="text" placeholder="Si" name="ele_rm_spec_vol" class="form-control form-control-sm"></input>&nbsp;&nbsp;
+      </div>
+    </div>
+
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label"># of inserted element: </label>
+        <input type="text" placeholder="3,2" name="ele_num_spec_vol" class="form-control form-control-sm" title="This blank is corresponding to 'element inserted'"></input>&nbsp;&nbsp;
+        <label class="control-label">Specific volume: </label>
+        <input type="text" placeholder="2" name="num_vol_spec_vol" class="form-control form-control-sm" title="you will get 3,4,5 times volume cells if you input 3,5 "></input>&nbsp;&nbsp;
+      </div>
+    </div>
+
+
+    <div class="form-inline">
+      <div class="form-group">
+        dimension: <select name="dim_spec_vol" class="form-control form-control-sm">
+          <option value="3">3</option>
+          <option value="2">2</option>
+        </select>&nbsp;&nbsp;
+        <label class="control-label">system precision: </label>
+        <input type="text" value="1e-3" name="symprec_spec_vol" class="form-control form-control-sm" title="If your structure heavily deviates the perfect crytal, please decrease the precision"></input>&nbsp;&nbsp;
+        <input type="submit" value="submit" name="spec_vol" class="myButton"></input>
+      </div>
+    </div>
+    <br><br>
+
+    5. Tetrahedral Interstitial Point Defect Configurations Generator <br>
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">element inserted: </label>
+        <input type="text" placeholder="H" name="ele_ins_tetra" class="form-control form-control-sm" title="This blank is corresponding to '# of inserted element'"></input>&nbsp;&nbsp;
+
+        <label class="control-label">minimum distance: </label>
+        <input type="text" value="1.5" name="min_dis" class="form-control form-control-sm" title="The minium distance between interstitial atoms and host atoms"></input>&nbsp;&nbsp;
+        <input type="submit" value="submit" name="tetra_site" class="myButton"></input>
+      </div>
+    </div>
+    hint: below format is supported
+    <ol>
+      <li>element inserted: H; minimum distance: 2 </li>
+    </ol>
+    <br>
+    <br>
+
+
+    6. Magnetic Configurations Generator <br>
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">magnetic atom: </label>
+        <input type="text" placeholder="Fe" name="magnetic_atom" class="form-control form-control-sm"></input>&nbsp;&nbsp;
+        <label class="control-label">spin number: </label>
+        <input type="text" value="1" name="spin_num" class="form-control form-control-sm" title=""></input>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+    <div class="form-inline">
+      <div class="form-group">
+        only AFM? :
+        <select class="form-control form-control-sm" name="only_AFM">
+          <option value="False">False</option>
+          <option value="True">True</option>
+        </select>&nbsp;&nbsp;
+
+        identical atoms have identitical spin number? :
+        <select class="form-control form-control-sm" name="magmon_identity">
+          <option value="False">False</option>
+          <option value="True">True</option>
+        </select>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">symprec: </label>
+        <input type="text" value="1e-3" name="symprec_mag_conf" class="form-control form-control-sm" title=""></input>&nbsp;&nbsp;
+
+        <input type="submit" value="submit" name="mag_config" class="myButton"></input>
+      </div>
+    </div>
+    hint: below format is supported
+    <ol>
+      <li>Magnetic atom: Fe; Spin number: 3 </li>
+    </ol>
+    <br>
+    <br>
+
+
+      7.Slab Model <br>
+        <div class="form-inline">
+      <div class="form-group">
+        <label class="control-label">Indices: </label>
+        <input type="text" placeholder="1,1,1" name="indice" class="form-control form-control-sm"></input>&nbsp;&nbsp;
+        <label class="control-label">Vacuum: </label>
+        <input type="text" placeholder="10" name="vacuum" class="form-control form-control-sm" title=""></input>&nbsp;&nbsp;
+          <label class="control-label">Layers: </label>
+        <input type="text" placeholder="1,5" name="layer" class="form-control form-control-sm"></input>&nbsp;&nbsp;
+                <input type="submit" value="submit" name="slice_surface" class="myButton"></input>
+        <div>
+            <div>
+               # Vacuum: The unit is angstrom <br>
+                # Layer: Number of equivalent layers of the slab, input 5 just generate a poscar with 5 equivalent layers, input 1,5 generate 5 poscars form 1 to 5. <br>
+    <br>
+      <br>
+
+</form>
+
+
+</div>
+
+
+
+
+{% endblock content %}

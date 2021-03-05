@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>SAGAR Online Version</title> 
+</head>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+<script src= "{{ url_for('static', filename='popper.min.js') }}" ></script>
+<script src= "{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+
+<style>
+textarea {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.myButton {
+	box-shadow: 0px 10px 14px -7px #276873;
+	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+	background-color:#599bb3;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:18px;
+	font-weight:bold;
+	/* padding:13px 32px; */
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+	background-color:#408c99;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+body {
+  font-size:120%;
+}
+#sticky-footer {
+  flex-shrink: none;
+}
+</style>
+
+<body >
+
+
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+
+<h1 align=center>SAGAR online vesion</h1>
+
+
+<a href="https://statcounter.com/p12130736/?guest=1" align="center">View Web traffic</a>
+<br> 
+Your ip addr: {{ ip }}
+
+</body>
+</html>
